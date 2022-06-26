@@ -1,4 +1,5 @@
 import { extractLink, parseMetadata } from 'common'
+import * as kv from 'common/kv'
 
 const { TELEGRAM_CHAT_ID } = process.env
 
@@ -22,6 +23,13 @@ export const onText = async ctx => {
       )
       return
     }
+    const exists = await kv.exists(link)
+    if (exists) {
+      ctx.reply(
+        'This voucher link has already been shared.'
+      )
+      return
+    }
     const { cashback, amount, merchant } = metadata
     await telegram.sendMessage(
       TELEGRAM_CHAT_ID,
@@ -34,6 +42,7 @@ ${link.replace(/\./g, '\\.')}
       `, 
       { parse_mode: 'MarkdownV2', disable_web_page_preview: true }
     )
+    await kv.put(link)
   } catch (error) {
     console.error(error)
     ctx.reply(`The following unexpected error occurred: ${error.message}`)

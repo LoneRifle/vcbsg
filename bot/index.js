@@ -12,6 +12,11 @@ if (!chatId) {
   throw new Error('TELEGRAM_CHAT_ID must be provided!')
 }
 
+const cloudflareKeyValueURL = process.env.CLOUDFLARE_KV_URL
+if (!cloudflareKeyValueURL) {
+  throw new Error('CLOUDFLARE_KV_URL must be provided!')
+}
+
 export const bot = new Telegraf(token, {
   telegram: { webhookReply: true }
 })
