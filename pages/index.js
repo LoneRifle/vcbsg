@@ -65,10 +65,10 @@ export default function Home() {
             below, or with <a href="https://t.me/vcbsg_bot">@vcbsg_bot</a> on Telegram
           </p>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div class="form-body">
+            <div className="form-body">
               <textarea {...register('body')}/>
             </div>
-            <div class="form-submit">
+            <div className="form-submit">
               <input type="submit" value="Go"/>
             </div>
           </form>
