@@ -1,23 +1,11 @@
-import { kv, extractLink, parseMetadata } from 'common'
+import { kv, validateSubmission } from 'common'
 
 const { TELEGRAM_CHAT_ID } = process.env
 
 export const handleSubmission = async (text, { telegram, onError }) => {
   try {
-    const link = extractLink(text)
-    if (!link) {
-      onError(
-        'No valid ShopBack voucher link was found.\n' +
-        'The link is either missing or invalid.'
-      )
-      return
-    }
-    const metadata = await parseMetadata(link)
-    if (!metadata) {
-      onError(
-        'Unable to look up information about the voucher.\n' +
-        'The link may not be for a voucher (eg, a referral link).'
-      )
+    const { link, metadata } = await validateSubmission(text, onError)
+    if (!link || ! metadata) {
       return
     }
     const exists = await kv.exists(link)

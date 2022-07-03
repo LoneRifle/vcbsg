@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import fetch from 'cross-fetch'
 
 const { CLOUDFLARE_KV_URL } = process.env
 
