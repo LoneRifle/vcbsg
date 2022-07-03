@@ -7,9 +7,8 @@ export const handleSubmission = async (text, { telegram, onError }) => {
     const link = extractLink(text)
     if (!link) {
       onError(
-        'No valid ShopBack voucher link was given.\n' +
-        'Either there was no link, the link is invalid,\n' +
-        'or the link has been shared before.'
+        'No valid ShopBack voucher link was found.\n' +
+        'The link is either missing or invalid.'
       )
       return
     }
