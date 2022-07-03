@@ -1,21 +1,57 @@
 import Head from 'next/head'
 import { useForm } from 'react-hook-form'
+import toast, { Toaster } from 'react-hot-toast'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 
+const toastOptions = {
+  success: {
+    style: {
+      background: '#eaffea',
+    },
+  },
+  error: {
+    style: {
+      background: '#ffeaea',
+    },
+  },
+}
+
 export default function Home() {
   const { register, handleSubmit } = useForm()
-  const onSubmit = async ({ body }) => {
-    await fetch(
+  const submitBody = async body => {
+    const response = await fetch(
       '/api/web',
       {
         body,
         method: 'POST',
       }
     )
+    const { message } = await response.json()
+    if (!response.ok) {
+      throw new Error(message)
+    } else {
+      return message
+    }
+  }
+  const onSubmit = ({ body }) => {
+    toast.promise(
+      submitBody(body), 
+      {
+        loading: 'Submitting',
+        success: message => message,
+        error: ({ message }) => message,
+      },
+      {
+        style: {
+          minWidth: '23rem',
+        }
+      }
+    )
   }
   return (
     <div className="container">
+      <Toaster toastOptions={toastOptions} />
       <Head>
         <title>Voucher Cashback Buddies</title>
         <link rel="icon" href="/favicon.ico" />
