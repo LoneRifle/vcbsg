@@ -11,12 +11,12 @@ body {
 }
 
 main {
-  padding: 5rem 0;
+  padding: 5rem 3rem;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
 }
 
 code {
@@ -30,6 +30,25 @@ code {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
+}
+
+form {
+  max-width: 50rem;
+}
+
+.form-body > textarea[name=body] {
+  width: 100%;
+  height: 15vh;
+}
+
+.form-submit {
+  display: flex;
+  justify-content: right;
+}
+
+.form-submit > input[value=Go] {
+  width: 5rem;
+  height: 5vh;
 }
