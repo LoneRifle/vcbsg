@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import toast, { Toaster } from 'react-hot-toast'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
+import { extractLink } from 'common'
 
 const toastOptions = {
   success: {
@@ -20,6 +21,13 @@ const toastOptions = {
 export default function Home() {
   const { register, handleSubmit } = useForm()
   const submitBody = async body => {
+    const link = extractLink(body)
+    if (!link) {
+      throw new Error(
+        'No valid ShopBack voucher link found.\n' +
+        'The link is either missing or invalid.'
+      )
+    }
     const response = await fetch(
       '/api/web',
       {
